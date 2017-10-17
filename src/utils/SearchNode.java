@@ -2,7 +2,6 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import core.State;
 
 /**
@@ -12,7 +11,7 @@ public class SearchNode implements Comparable {
 
     // variables
     private final static int BOARD_SIZE = 3;
-    private List<SearchNode> children;
+    private ArrayList<SearchNode> children;
 
     // elements
     private State state;
@@ -22,14 +21,25 @@ public class SearchNode implements Comparable {
     public SearchNode(int[][] e_element) {
         state = new State(e_element);
         cost  = state.getCost();
+
+        addPossibleChildren();
     }
 
     public SearchNode(State state) {
         this.state = state;
         cost = state.getCost();
+
+        addPossibleChildren();
     }
 
     // methods
+    public boolean isGoal() {
+        return state.getCost() == 0;
+    }
+    public ArrayList<SearchNode> getChildren() {
+        return children;
+    }
+
     public int[][] getBoard() {
         return state.getBoard();
     }
@@ -42,6 +52,17 @@ public class SearchNode implements Comparable {
         return state;
     }
 
+    public void addPossibleChildren() {
+        ArrayList<State> states = state.findPossibleActions();
+        for (State a : states) {
+            children.add(new SearchNode(a));
+        }
+
+        Collections.sort(children);
+    }
+
+    // standard tree algorithms
+    // i don't think that i would ever use them but still...
     public void addNewChildren(SearchNode node) {
         children.add(node);
         Collections.sort(children);
