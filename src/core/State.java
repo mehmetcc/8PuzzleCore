@@ -48,32 +48,25 @@ public class State {
 
     private int calculateCost() {
         int tmp = 0;
-        System.out.println("x " + "y " + "sum");
 
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int column = 0; column < BOARD_SIZE; column++) {
                 int val = board[row][column];
-                HashMap<String, Integer> goalCoordinates = findCoordinatesAtGoal(val);
-                int row_cost = Math.abs(goalCoordinates.get("row") - row);
-                System.out.print(row_cost + " ");
-                int column_cost = Math.abs(goalCoordinates.get("column") - column);
-                System.out.print(column_cost + " ");
+                Point goalCoordinates = findCoordinatesAtGoal(val);
+                int row_cost = Math.abs(goalCoordinates.getRow() - row);
+                int column_cost = Math.abs(goalCoordinates.getColumn() - column);
                 tmp = tmp + row_cost + column_cost;
-                System.out.println(tmp);
             }
         }
-
-        System.out.println("Heuristic: " + tmp);
-        System.out.println("-----------------");
         return tmp;
     }
 
     public ArrayList<State> findPossibleActions() {
-        HashMap<String, Integer> zero_loc = findEmptySpace();
+        Point zero_loc = findEmptySpace();
         ArrayList<State> possibleStates = new ArrayList<>();
 
-        int row    = zero_loc.get("row");
-        int column = zero_loc.get("column");
+        int row    = zero_loc.getRow();
+        int column = zero_loc.getColumn();
 
         if (row == 0 && column == 0) {
             // first swap
@@ -225,36 +218,30 @@ public class State {
     // auxiliaries
 
 
-    private HashMap<String, Integer> findEmptySpace() {
-        HashMap<String, Integer> point = new HashMap<>();
-
+    private Point findEmptySpace() {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int column = 0; column < BOARD_SIZE; column++) {
                 if (board[row][column] == 0) {
-                    point.put("row", row);
-                    point.put("column", column);
+                    Point point = new Point(row, column);
                     return point;
                 }
             }
         }
 
-        return point;
+        return null;
     }
 
-    private HashMap<String, Integer> findCoordinatesAtGoal(int val) {
-        HashMap<String, Integer> point = new HashMap<>();
-
+    private Point findCoordinatesAtGoal(int val) {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int column = 0; column <BOARD_SIZE; column++) {
                 if (goal[row][column] == val) {
-                    point.put("row", row);
-                    point.put("column", column);
+                    Point point = new Point(row, column);
                     return point;
                 }
             }
         }
 
-        return point;
+        return null;
     }
 
 } //class ends

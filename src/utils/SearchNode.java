@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import core.State;
 
@@ -21,15 +22,12 @@ public class SearchNode implements Comparable {
     public SearchNode(int[][] e_element) {
         state = new State(e_element);
         cost  = state.getCost();
-
-        addPossibleChildren();
     }
 
     public SearchNode(State state) {
         this.state = state;
         cost = state.getCost();
 
-        addPossibleChildren();
     }
 
     // methods
@@ -87,5 +85,10 @@ public class SearchNode implements Comparable {
         SearchNode tmp = (SearchNode)o;
         int val = tmp.getCost();
         return this.cost - val;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.deepToString(this.getBoard());
     }
 }

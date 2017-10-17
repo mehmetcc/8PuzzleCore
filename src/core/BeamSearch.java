@@ -25,22 +25,19 @@ public class BeamSearch {
     public SearchNode find(SearchNode start) {
         if (start.isGoal()) return start;
 
-        Queue<SearchNode> frontier = new LinkedList();
-        frontier.add(start);
-        List<Boolean> visited = new ArrayList<>();
-        boolean found = false;
+        Queue<SearchNode> q = new LinkedList<>();
+        List<SearchNode> visited = new ArrayList<>();
+        visited.add(start);
+        q.add(start);
 
-        while (!found) {
-            if (frontier.isEmpty()) {
-                System.out.println("No solution for you!");
-                return null;
-            }
-
-            SearchNode node = frontier.remove();
-
-
+        while(!q.isEmpty()) {
+            SearchNode node = q.remove();
 
         }
+
+
+        // ToDO
+        return null;
     }
 
 

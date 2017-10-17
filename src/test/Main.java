@@ -3,6 +3,7 @@ package test;
 
 import core.State;
 import utils.ArrayUtils;
+import utils.SearchNode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,5 +20,8 @@ public class Main {
         };
 
         State state = new State(i_initial);
+        SearchNode tree = new SearchNode(state);
+
+        System.out.println(tree);
     }
 }
