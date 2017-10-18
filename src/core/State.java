@@ -2,13 +2,13 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import utils.ArrayUtils;
 
 /**
  * A product of mecha
  */
-public class State {
+public class State implements Comparable {
     // variables
     private final static int BOARD_SIZE = 3;
     private int board[][];
@@ -55,7 +55,7 @@ public class State {
                 Point goalCoordinates = findCoordinatesAtGoal(val);
                 int row_cost = Math.abs(goalCoordinates.getRow() - row);
                 int column_cost = Math.abs(goalCoordinates.getColumn() - column);
-                tmp = tmp + row_cost + column_cost;
+                tmp += row_cost + column_cost;
             }
         }
         return tmp;
@@ -207,11 +207,31 @@ public class State {
             possibleStates.add(new State(b));
         }
 
+        Collections.sort(possibleStates);
         return possibleStates;
+    }
+
+    public ArrayList<State> returnByWidth(int width) {
+        ArrayList<State> allPossible = this.findPossibleActions();
+        ArrayList<State> manhattan = new ArrayList<>();
+
+        for (int w = 0; w < width; w++) {
+            manhattan.add(allPossible.get(w));
+        }
+
+        return manhattan;
     }
 
     public String toString() {
         return Arrays.deepToString(board);
+    }
+
+    // comparable interface
+    @Override
+    public int compareTo(Object o) {
+        State tmp = (State) o;
+        int val = tmp.getCost();
+        return this.cost - val;
     }
 
 
