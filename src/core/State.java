@@ -35,7 +35,7 @@ public class State implements Comparable {
         };
 
         // check if in the goal state
-        isGoal = Arrays.deepEquals(board, goal);
+        isGoal = (this.getCost() == 0);
 
         // calculate manhattan distance
         if (!isGoal) cost = calculateCost();
